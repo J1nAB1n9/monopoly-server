@@ -1,8 +1,8 @@
 package settings
 
 import (
-	"fmt"
 	"github.com/spf13/viper"
+	"monopoly-server/logger"
 )
 
 var config *viper.Viper
@@ -13,7 +13,7 @@ func GetConfig() *viper.Viper {
 func NewConfig()  {
 	config = viper.New()
 	config.SetConfigType("toml")
-	config.AddConfigPath("/config")
+	config.AddConfigPath("./config")
 
 	// default
 	config.SetDefault("mode","debug")
@@ -22,6 +22,6 @@ func NewConfig()  {
 
 	// init viper
 	if err := config.ReadInConfig();err != nil {
-		fmt.Errorf("read err")
+		logger.Fatal("loading config.toml error :%v",err)
 	}
 }
